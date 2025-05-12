@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .services.excelSaveService import ExcelSaveService
@@ -11,7 +10,6 @@ from .selectors.tradingFormOptionsSelector import TradingFormOptionsSelector
 from .models import Portfolio
 from http.cookies import SimpleCookie
 
-# Create your views here.
 @csrf_exempt
 def upload_file(request):
     if request.method == "POST":

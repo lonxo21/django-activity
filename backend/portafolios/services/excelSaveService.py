@@ -1,7 +1,6 @@
 import pandas as pd
 from ..models import Portfolio, Stock, StockInitialQuantity, StockPrice, DateOfPrice
 from .dateParser import DateParser
-from django.db import connection
 
 class ExcelSaveService:
     def __init__(self, request):

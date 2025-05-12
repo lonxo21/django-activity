@@ -1,4 +1,4 @@
-import { Image, VStack, Heading, Box, FileUpload, Icon, Center, Button, Spinner, Field, NumberInput, InputGroup,  } from "@chakra-ui/react"
+import { Image, VStack, Heading, Center, Button, Spinner } from "@chakra-ui/react"
 import { ConfigProvider, Form, InputNumber, Upload, theme  } from "antd"
 import { InboxOutlined } from '@ant-design/icons';
 import { IHomeInput } from "@/interfaces/ApiInterfaces"

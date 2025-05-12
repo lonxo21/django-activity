@@ -1,7 +1,6 @@
 import json
 from ..services.dateParser import DateParser
 from ..models import Trading, DateOfPrice
-from django.db import connection
 
 class TradingSaveService():
     def __init__(self, request):

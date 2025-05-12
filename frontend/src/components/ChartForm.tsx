@@ -1,14 +1,14 @@
-import { VStack, Button, Wrap } from "@chakra-ui/react"
-import { DatePicker, ConfigProvider, InputNumber, Form, theme } from "antd"
+import { VStack, Button} from "@chakra-ui/react"
+import { DatePicker, ConfigProvider, Form, theme } from "antd"
 import esES from 'antd/locale/es_ES'
-import { IChartRequest, IPortfolioInfo, IChartsForm, IAlreadyUploadedPortfolios } from "@/interfaces/ApiInterfaces"
+import { IChartRequest, IChartsForm, IAlreadyUploadedPortfolios } from "@/interfaces/ApiInterfaces"
 import { IPortfoliosChartData } from "@/interfaces/ChartInterfaces"
 import { getChartData } from "@/api/apiCalls"
 import { useState } from "react"
 import dayjs from 'dayjs';
 import 'dayjs/locale/es'
 import '@/styles/chartPage.css'
-import { moneyValidator, parseStringDataToDayJs } from "@/utils"
+import { parseStringDataToDayJs } from "@/utils"
 dayjs.locale('es')
 
 const { RangePicker } = DatePicker;
@@ -55,6 +55,7 @@ export function ChartForm({portfoliosInfo, setChartData}:
             onFinish={requestChartData}
             initialValues={initialValues(portfoliosInfo)}
             className="fullWidth"
+            size="large"
         >
         <VStack>
         <ConfigProvider locale={esES}>

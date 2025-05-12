@@ -1,7 +1,6 @@
 from ..services.jwt import JWTService
 from ..models import Portfolio, DateOfPrice
 from django.db.models import Min, Max
-from django.db import connection
 
 class TradingFormOptionsSelector:
     def __init__(self, request):

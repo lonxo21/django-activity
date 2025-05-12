@@ -1,10 +1,8 @@
 import json
 from ..services.dateParser import DateParser
-import datetime
-from ..models import Portfolio, Stock, StockInitialQuantity, DateOfPrice, StockPrice
+from ..models import Portfolio, DateOfPrice, StockPrice
 from .colorSelector import ColorSelector
 from django.db.models import Q, Sum, F
-from django.db import connection
 
 class ChartsDataGetter:
     def __init__(self, request):

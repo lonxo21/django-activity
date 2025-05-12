@@ -1,0 +1,79 @@
+.formContainer {
+    margin-bottom: 2%;
+    padding-right: 5%;
+    width: 100%;
+}
+
+.fullWidth{
+    width: 100%;
+    margin-top: 1%;
+}
+
+.chartsContainer {
+    width: 100%;
+    padding: 2%;
+}
+
+.stackedChartContainer{
+    width:49%;
+    align-items: stretch;
+}
+
+@media screen and (max-width: 1000px) {
+    .stackedChartContainer{
+        width:100%;
+    }
+}
+
+.stackedChartResponsiveContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.total {
+    color: white
+}
+
+.stockQuantity{
+    padding-left: 7%;
+    padding-right: 7%;
+}
+
+.stackedChartTooltip{
+    background-color: black;
+    padding: 2%;
+    border-radius: 3%;
+}
+
+.valueChartTooltip{
+    background-color: black;
+    padding: 2%;
+    border-radius: 3%;
+    width: 110%;
+}
+
+.modalFormLine {
+    margin-bottom: 8;
+    width: 100%;
+}
+
+.modalFormItem {
+    width: 100%;
+    margin: 0;
+}
+
+.modalRadioItem{
+    margin: 0;
+}
+
+.tradingFormRadio {
+    display: flex;
+    flex-direction: 'column';
+}
+
+.dividerFormDialog{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

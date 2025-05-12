@@ -12,7 +12,7 @@ La aplicación está en modo desarrollo: el frontend y el backend están siendo 
 
 El backend será servido con apache (mod_wsgi), y el frontend probablemente con nginx. Ambos serán encriptados con certificados de Let's Encrypt, más que nada porque no he usado apache + certbot y quiero probarlo. Todo esto lo iré subiendo a este repo por si a alguien le interesa.
 
-Hay un diagrama entidad relación que explica claramente como se modeló el problema. [permalink](https://github.com/lonxo21/django-activity/blob/1d2e96630e6f9ad07c07866cf495a791a01b92fa/DiagramaER.png)
+Hay un diagrama entidad relación que explica como se modeló el problema. [permalink](https://github.com/lonxo21/django-activity/blob/1d2e96630e6f9ad07c07866cf495a791a01b92fa/DiagramaER.png)
 
 ### Cosas que cambiaría / mejoraría
 Como está la aplicación, cuando uno sube un excel, el backend se encarga de guardar en la BDD la información de ambas hojas, actualizando los precios de haber cambiado. Esto quedó así porque no quería que tuvieran que hacer un setup a la página (subir los precios). Pero si quiero que los usuarios de la aplicación puedan ingresar archivos varias veces (con modificaciones probablemente, para testear) y no solamente una vez al inicio. Además no quería modificar el archivo que se me entregó.

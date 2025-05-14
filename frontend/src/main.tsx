@@ -4,7 +4,7 @@ import './index.css'
 import { Provider } from "@/components/ui/provider"
 import { BrowserRouter, Routes, Route } from "react-router";
 import { HomePage } from './components/HomePage.tsx'
-import { ChartPage } from './components/ChartPage.tsx';
+import { ChartPage } from './components/Charts/ChartPage.tsx';
 import '@ant-design/v5-patch-for-react-19';
 
 

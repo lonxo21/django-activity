@@ -51,7 +51,7 @@ class Trading(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     dateOfTrading = models.ForeignKey(DateOfPrice, on_delete=models.CASCADE)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    price = models.FloatField(default=1, validators=[priceValidator])
+    quantityOfTrading = models.FloatField(default=1, validators=[priceValidator])
 
     def __str__(self):
-        return str(self.price)
+        return str(self.quantityOfTrading)

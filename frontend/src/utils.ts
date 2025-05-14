@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { ITradingFormEntry, ITradingRequestEntry } from './interfaces/ApiInterfaces';
 
 export function parseDate(date:string) : string {
     const splittedDate : string[] = date.split("-")
@@ -48,4 +49,14 @@ export const parseStringDataToDayJs = (date:string) : dayjs.Dayjs => {
 export const moneyValidator = (_:any,value: any) : Promise<Error|void>=>{
     if (value > 0) {return Promise.resolve()}
     else {return Promise.reject(new Error("Debe ser mayor a cero!"))}
-} 
+}
+
+export const parseTradingFromEntryToRequestEntry = (formEntry : ITradingFormEntry) : ITradingRequestEntry => {
+    return {
+        buyOrSell: formEntry.buyOrSell,
+        portfolioId : formEntry.portfolioId,
+        stockId: formEntry.stockId,
+        price: formEntry.price,
+        date: formEntry.date.format("YYYY-MM-DD"),
+    }
+}

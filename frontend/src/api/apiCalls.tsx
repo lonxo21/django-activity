@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "./apiConfig";
-import { IHomeInput, IAlreadyUploadedPortfolios, IChartRequest, ITradingFormOptions, ITradingRequest } from "@/interfaces/ApiInterfaces";
+import { IHomeInput, IAlreadyUploadedPortfolios, IChartRequest, ITradingFormOptions, ITradingRequest, ITradingRequestEntry, ITradingPreviewData, ITradingError } from "@/interfaces/ApiInterfaces";
 import { IPortfoliosChartData } from "@/interfaces/ChartInterfaces";
 
 export const uploadFile = async ( data:IHomeInput) :Promise<boolean> => {
@@ -18,8 +18,7 @@ export const uploadFile = async ( data:IHomeInput) :Promise<boolean> => {
       } else {
         return true
       }
-    } catch (error) {
-      console.log(error)
+    } catch {
       return false
     }
   }
@@ -36,7 +35,7 @@ export const getIfFileAlreadyUploaded = async () :Promise<IAlreadyUploadedPortfo
       const data: IAlreadyUploadedPortfolios = response.data
       return data
     }
-  } catch (error) {
+  } catch{
     return undefined
   }
 }
@@ -52,7 +51,7 @@ export const getChartData = async (query : IChartRequest) :Promise<IPortfoliosCh
     } else {
       return response.data
     }
-  } catch (error) {
+  } catch {
     return undefined
   }
 }
@@ -68,7 +67,7 @@ export const deleteDataRequest = async () :Promise<boolean> => {
     } else {
       return true
     }
-  } catch (error) {
+  } catch{
     return false
   }
 }
@@ -84,23 +83,40 @@ export const getTradingFormOptions = async () :Promise<ITradingFormOptions | und
     } else {
       return response.data
     }
-  } catch (error) {
+  } catch{
     return undefined
   }
 }
 
-export const postTradingOperations = async (tradingFormData : ITradingRequest) : Promise<boolean> => {
+export const postTradingOperations = async (tradingFormData : ITradingRequest) : Promise<ITradingError> => {
   try {
     const response: AxiosResponse = await api.post(
       "/subir_compraventa",
       tradingFormData,
     );
+    const statusOfResponse = response.status
+    if (statusOfResponse == 201) {
+      return {serverError: false, tradingErrorList: response.data.errors}
+    } else {
+      throw new Error()
+    }
+  } catch{
+    return {serverError: true, tradingErrorList: []}
+  }
+}
+
+export const getTradingPreview = async (tradingRequestEntry : ITradingRequestEntry) : Promise<ITradingPreviewData|undefined> => {
+  try {
+    const response: AxiosResponse = await api.post(
+      "/previsualizar_compraventa",
+      tradingRequestEntry,
+    );
     if (response.status != 200) {
       throw new Error(response.data)
     } else {
-      return true
+      return response.data
     }
-  } catch (error) {
-    return false
+  } catch {
+    return undefined
   }
 }

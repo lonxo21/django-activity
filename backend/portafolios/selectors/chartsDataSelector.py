@@ -52,7 +52,7 @@ class ChartsDataGetter:
         stockPrices = StockPrice.objects.filter(dateOfPrice__date__range=[self.startDate, self.endDate], stock__portfolio=portfolio)
         stockPrices = stockPrices.select_related("stock", "dateOfPrice").order_by("dateOfPrice__date")
         filterForTradings = Q(dateOfPrice__trading__portfolio=portfolio)&Q(dateOfPrice__trading__stock=F("stock"))
-        stockPrices = stockPrices.annotate(tradingPrice=Sum("dateOfPrice__trading__price", filter=filterForTradings, default=0))
+        stockPrices = stockPrices.annotate(tradingQuantity=Sum("dateOfPrice__trading__quantityOfTrading", filter=filterForTradings, default=0))
         stockPrices = list(stockPrices)
 
         stackedChartData = []
@@ -71,15 +71,11 @@ class ChartsDataGetter:
             stockValue = stockPrice.price * stockQuantity
             stackedChartData[indexOfDate][stockPrice.stock.name] = stockValue
             self._addValueByDateToChartData(actualDate, stockValue, portfolio, indexOfDate)
-
         return stackedChartData
     
     def _includeTrading(self, quantityOfStockes : dict[str, float], stockPrice : StockPrice):
-        priceOfTrading = stockPrice.tradingPrice
-        priceAtActualDate = stockPrice.price
-        quantityOfTrading = priceOfTrading / priceAtActualDate
         stockName = stockPrice.stock.name
-        quantityOfStockes[stockName] = max(quantityOfStockes[stockName] + quantityOfTrading, 0)
+        quantityOfStockes[stockName] = max(quantityOfStockes[stockName] + stockPrice.tradingQuantity, 0)
 
 
     def _addValueByDateToChartData(self, date : DateOfPrice, valueToAdd : float, portfolio: Portfolio, index:int):

@@ -7,6 +7,7 @@ from .services.tradingSaveService import TradingSaveService
 from .selectors.ifFileUploadedChecker import IfFileUploadedChecker
 from .selectors.chartsDataSelector import ChartsDataGetter
 from .selectors.tradingFormOptionsSelector import TradingFormOptionsSelector
+from .selectors.tradingPreviewSelector import TradingPreviewSelector
 from .models import Portfolio
 from http.cookies import SimpleCookie
 
@@ -70,7 +71,15 @@ def get_trading_info(request):
 @csrf_exempt
 def save_trading(request):
     tradingSaveService = TradingSaveService(request)
-    tradingSaveService.saveTradings()
-    response = HttpResponse()
+    errors = tradingSaveService.saveTradings()
+    response = JsonResponse({"errors": errors})
+    response.status_code = 201
+    return response
+
+@csrf_exempt
+def preview_trading(request):
+    tradingPreviewSelector = TradingPreviewSelector(request)
+    tradingPreviewData = tradingPreviewSelector.previewTrading()
+    response = JsonResponse(tradingPreviewData)
     response.status_code = 200
     return response

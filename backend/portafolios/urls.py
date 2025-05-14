@@ -9,5 +9,6 @@ urlpatterns = [
     path("graficos", views.get_data_for_chart, name="get_data_for_chart"),
     path("eliminar_datos", views.delete_data, name="delete_data"),
     path("info_compraventa", views.get_trading_info, name="get_trading_info"),
-    path("subir_compraventa", views.save_trading, name="save_trading")
+    path("subir_compraventa", views.save_trading, name="save_trading"),
+    path("previsualizar_compraventa", views.preview_trading, name="preview_trading"),
 ]

@@ -55,8 +55,13 @@
 }
 
 .modalFormLine {
-    margin-bottom: 8;
+    margin-bottom: 1%;
     width: 100%;
+}
+
+.modalFormLinePreview {
+    padding-left: 1%;
+    padding-right: 1%;
 }
 
 .modalFormItem {

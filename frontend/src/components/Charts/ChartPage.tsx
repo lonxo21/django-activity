@@ -7,8 +7,8 @@ import { IPortfoliosChartData, IStackedChartData } from "@/interfaces/ChartInter
 import { StackedAreaChart } from "./StackedAreaChart";
 import { ValueLineChart } from "./ValueLineChart";
 import { ChartForm } from "./ChartForm";
-import { DeleteDialog } from "./DeleteDialog";
-import { TradingDialog } from "./TradingDialog";
+import { DeleteDialog } from "../DeleteDialog";
+import { TradingDialog } from "../Trading/TradingDialog";
 
 
 export function ChartPage(){

@@ -70,3 +70,25 @@ export interface ITradingRequestEntry{
     price: number,
     date: string,
 }
+
+export interface ITradingError {
+    serverError: boolean,
+    tradingErrorList: ITradingErrorInfo[],
+}
+
+export interface ITradingErrorInfo{
+    portfolioName: string,
+    stockName: string,
+    date: string,
+    price: number,
+    buyOrSell: string,
+    errorReason: string,
+}
+
+export interface ITradingPreviewData {
+    initialQuantity: number;
+    quantityLeftAfterAllTrades: number;
+    quantityLeftUntilDate: number;
+    quantityChangeByThisTrade: number;
+    priceAtDate: number;
+}

@@ -1,20 +1,44 @@
-import { DatePicker, ConfigProvider, InputNumber, Form, Radio, Select, Flex, Divider } from "antd"
-import { MinusCircleOutlined } from '@ant-design/icons';
+import { DatePicker, ConfigProvider, InputNumber, Form, Radio, Select, Flex, Divider, Tooltip } from "antd"
+import type { FormInstance } from "antd/lib";
+import { MinusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import esES from 'antd/locale/es_ES'
 import dayjs from 'dayjs';
 import 'dayjs/locale/es'
 import '@/styles/chartPage.css'
-import { moneyValidator, parseStringDataToDayJs } from "@/utils";
-import { ITradingFormOptions, ITradingStockOptions } from "@/interfaces/ApiInterfaces";
+import { moneyValidator, parseStringDataToDayJs, parseTradingFromEntryToRequestEntry } from "@/utils";
+import { ITradingFormEntry, ITradingFormOptions, ITradingPreviewData, ITradingStockOptions } from "@/interfaces/ApiInterfaces";
 import { useState } from "react";
+import { TradingPreview } from "./TradingPreview";
+import { getTradingPreview } from "@/api/apiCalls";
 dayjs.locale('es')
 
-export function TradingFormRow({name, restField, remove, tradingOptions}:
-    {name:number, restField: {fieldKey?: number;}, remove:(index: number | number[]) => void, tradingOptions: ITradingFormOptions}){
+export function TradingFormRow({name, restField, remove, tradingOptions, form}:
+    {name:number, restField: {fieldKey?: number;}, remove:(index: number | number[]) => void, 
+    tradingOptions: ITradingFormOptions, form: FormInstance}){
     
-    const [stockOptions, setStockOptions] = useState<ITradingStockOptions[]>([])
+    const [stockOptions, setStockOptions] = useState<ITradingStockOptions[]>([]);
+    const [previewData, setPreviewData] = useState<ITradingPreviewData|undefined>(undefined);
+    const [showPreview, setShowPreview] = useState<boolean>(false);
+    const [previewError, setPreviewError] = useState<boolean>(false);
+
+    const fetchAndShowReview = ()=>{
+        const tradingFormEntry : ITradingFormEntry = form.getFieldValue(["trading", name]);
+        if (Object.keys(tradingFormEntry).length < 5){
+            return
+        }
+        setShowPreview(true);
+        const tradingRequestEntry = parseTradingFromEntryToRequestEntry(tradingFormEntry);
+        getTradingPreview(tradingRequestEntry).then((tradingPreviewData)=>{
+            if (tradingPreviewData) {
+                setPreviewData(tradingPreviewData);
+                setPreviewError(false);
+            } else {
+                setPreviewError(true);
+            }
+        })
+    }
     
-    return <div>
+    return <Flex vertical>
     <Flex gap={"1%"} vertical={false} className="modalFormLine" align="center" justify="center">
     <Form.Item 
         {...restField}
@@ -75,12 +99,17 @@ export function TradingFormRow({name, restField, remove, tradingOptions}:
         className="modalFormItem"
         initialValue={parseStringDataToDayJs(tradingOptions.minDate)}
         >
-            <DatePicker format={"DD-MM-YYYY"} allowClear={false} className="modalFormItem" 
+            <DatePicker format={"DD-MM-YYYY"} allowClear={false} className="modalFormItem" placement="bottomLeft" showNow={false}
             minDate={parseStringDataToDayJs(tradingOptions.minDate)} maxDate={parseStringDataToDayJs(tradingOptions.maxDate)}/>
         </Form.Item>
     </ConfigProvider>
+    <Tooltip title={"Previsualizar compraventa"}>
+        <SearchOutlined onClick={fetchAndShowReview}/>
+    </Tooltip>
     <MinusCircleOutlined onClick={() => remove(name)} />
     </Flex>
+    {showPreview && <TradingPreview previewData={previewData} setShowPreview={setShowPreview} error={previewError}
+                    setError={setPreviewError}/>}
     <Divider className="dividerFormDialog"/>
-    </div>
+    </Flex>
 }
